@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brasaland Digital | Department Application Form</title>
+    <meta
+      name="description"
+      content="Submit a Brasaland department request for digital automation, API, telemetry, and AI workflow initiatives."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="validation.js" defer></script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
+    <header class="border-b border-slate-200 bg-white" role="banner">
+      <div class="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <a href="index.html" class="text-lg font-black tracking-tight text-slate-900">Brasaland Digital</a>
+        <nav aria-label="Page navigation">
+          <a href="index.html" class="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-100">
+            Back to landing
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+      <section aria-labelledby="form-title">
+        <h1 id="form-title" class="text-3xl font-black tracking-tight sm:text-4xl">Department Application Form</h1>
+        <p class="mt-3 max-w-3xl text-sm text-slate-600 sm:text-base">
+          Use this form to request a digital initiative for Brasaland operations across Colombia and Florida.
+          All required fields are marked and validated before submission.
+        </p>
+      </section>
+
+      <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6" aria-label="Application form container">
+        <div
+          id="formStatus"
+          class="mb-6 hidden rounded-xl border px-4 py-3 text-sm font-medium"
+          role="status"
+          aria-live="polite"
+        ></div>
+
+        <form id="applicationForm" class="space-y-8" novalidate>
+          <fieldset class="space-y-4">
+            <legend class="text-lg font-bold text-slate-900">Requester Information</legend>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label for="requesterName" class="mb-1 block text-sm font-semibold text-slate-800">Full name *</label>
+                <input
+                  id="requesterName"
+                  name="requesterName"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="requesterNameError"
+                />
+                <p id="requesterNameError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div>
+                <label for="department" class="mb-1 block text-sm font-semibold text-slate-800">Department *</label>
+                <select
+                  id="department"
+                  name="department"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="departmentError"
+                >
+                  <option value="">Select department</option>
+                  <option value="Restaurant Operations">Restaurant Operations</option>
+                  <option value="Procurement and Suppliers">Procurement and Suppliers</option>
+                  <option value="Marketing and Digital Experience">Marketing and Digital Experience</option>
+                  <option value="People and Culture">People and Culture</option>
+                  <option value="Training and Quality Standards">Training and Quality Standards</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Executive Direction">Executive Direction</option>
+                </select>
+                <p id="departmentError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div>
+                <label for="workEmail" class="mb-1 block text-sm font-semibold text-slate-800">Work email *</label>
+                <input
+                  id="workEmail"
+                  name="workEmail"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  placeholder="name@brasaland.com"
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="workEmailError"
+                />
+                <p id="workEmailError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div>
+                <label for="workPhone" class="mb-1 block text-sm font-semibold text-slate-800">Work phone *</label>
+                <input
+                  id="workPhone"
+                  name="workPhone"
+                  type="tel"
+                  required
+                  autocomplete="tel"
+                  placeholder="+57 300 111 2233"
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="workPhoneError"
+                />
+                <p id="workPhoneError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="space-y-4">
+            <legend class="text-lg font-bold text-slate-900">Location and Market</legend>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label for="locationId" class="mb-1 block text-sm font-semibold text-slate-800">Location ID (14 total) *</label>
+                <select
+                  id="locationId"
+                  name="locationId"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="locationIdError"
+                >
+                  <option value="">Select location</option>
+                  <option value="CO-MED-01">CO-MED-01</option>
+                  <option value="CO-MED-02">CO-MED-02</option>
+                  <option value="CO-MED-03">CO-MED-03</option>
+                  <option value="CO-MED-04">CO-MED-04</option>
+                  <option value="CO-MED-05">CO-MED-05</option>
+                  <option value="CO-MED-06">CO-MED-06</option>
+                  <option value="CO-MED-07">CO-MED-07</option>
+                  <option value="CO-MED-08">CO-MED-08</option>
+                  <option value="US-MIA-01">US-MIA-01</option>
+                  <option value="US-MIA-02">US-MIA-02</option>
+                  <option value="US-MIA-03">US-MIA-03</option>
+                  <option value="US-MIA-04">US-MIA-04</option>
+                  <option value="US-MIA-05">US-MIA-05</option>
+                  <option value="US-MIA-06">US-MIA-06</option>
+                </select>
+                <p id="locationIdError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div>
+                <label for="countryMarket" class="mb-1 block text-sm font-semibold text-slate-800">Country market *</label>
+                <select
+                  id="countryMarket"
+                  name="countryMarket"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="countryMarketError"
+                >
+                  <option value="">Select market</option>
+                  <option value="Colombia">Colombia</option>
+                  <option value="United States (Florida)">United States (Florida)</option>
+                </select>
+                <p id="countryMarketError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="space-y-4">
+            <legend class="text-lg font-bold text-slate-900">Automation Request</legend>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="sm:col-span-2">
+                <label for="challengeType" class="mb-1 block text-sm font-semibold text-slate-800">Challenge type from milestone map *</label>
+                <select
+                  id="challengeType"
+                  name="challengeType"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="challengeTypeError"
+                >
+                  <option value="">Select challenge</option>
+                  <option value="Real-time sales dashboard">Real-time sales dashboard</option>
+                  <option value="Intelligent ingredient ordering">Intelligent ingredient ordering</option>
+                  <option value="No-sales opening-hours alerts">No-sales opening-hours alerts</option>
+                  <option value="Supplier price history and alerts">Supplier price history and alerts</option>
+                  <option value="Digital loyalty and ordering app">Digital loyalty and ordering app</option>
+                  <option value="Customer CRM and personalization engine">Customer CRM and personalization engine</option>
+                  <option value="HR portal and onboarding automation">HR portal and onboarding automation</option>
+                  <option value="Training platform and recipe update push">Training platform and recipe update push</option>
+                  <option value="Central API and telemetry pipeline">Central API and telemetry pipeline</option>
+                  <option value="Executive AI assistant and Monday report">Executive AI assistant and Monday report</option>
+                </select>
+                <p id="challengeTypeError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div>
+                <label for="targetDate" class="mb-1 block text-sm font-semibold text-slate-800">Target launch date *</label>
+                <input
+                  id="targetDate"
+                  name="targetDate"
+                  type="date"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="targetDateError"
+                />
+                <p id="targetDateError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div>
+                <label for="weeklyIncidents" class="mb-1 block text-sm font-semibold text-slate-800">Weekly incidents affected *</label>
+                <input
+                  id="weeklyIncidents"
+                  name="weeklyIncidents"
+                  type="number"
+                  min="1"
+                  max="50000"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="weeklyIncidentsError"
+                />
+                <p id="weeklyIncidentsError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="currentProcess" class="mb-1 block text-sm font-semibold text-slate-800">Current process and tools (e.g., WhatsApp, Excel, PDF reports) *</label>
+                <textarea
+                  id="currentProcess"
+                  name="currentProcess"
+                  rows="4"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="currentProcessError"
+                ></textarea>
+                <p id="currentProcessError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="expectedOutcome" class="mb-1 block text-sm font-semibold text-slate-800">Expected business outcome *</label>
+                <textarea
+                  id="expectedOutcome"
+                  name="expectedOutcome"
+                  rows="3"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none ring-orange-500 transition focus:border-orange-500 focus:ring-2"
+                  aria-describedby="expectedOutcomeError"
+                ></textarea>
+                <p id="expectedOutcomeError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="space-y-4">
+            <legend class="text-lg font-bold text-slate-900">Approval</legend>
+
+            <div>
+              <label class="inline-flex items-start gap-3 text-sm text-slate-700" for="confirmData">
+                <input
+                  id="confirmData"
+                  name="confirmData"
+                  type="checkbox"
+                  required
+                  class="mt-1 h-4 w-4 rounded border-slate-300 text-orange-600 focus:ring-orange-500"
+                  aria-describedby="confirmDataError"
+                />
+                <span>I confirm this request represents a real Brasaland department need and includes accurate operational context. *</span>
+              </label>
+              <p id="confirmDataError" class="mt-1 text-sm text-red-600" aria-live="polite"></p>
+            </div>
+          </fieldset>
+
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center rounded-full bg-orange-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-orange-700"
+            >
+              Submit application
+            </button>
+            <button
+              type="reset"
+              id="clearFormButton"
+              class="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-400 hover:bg-slate-100"
+            >
+              Clear form
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

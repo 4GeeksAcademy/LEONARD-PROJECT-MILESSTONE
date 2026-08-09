@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milestone 2 | Brasaland TypeScript Logic Tester</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <header class="border-b border-slate-800 bg-slate-900/80">
+      <div class="mx-auto max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+        <p class="text-xs font-semibold uppercase tracking-widest text-cyan-300">Milestone 2</p>
+        <h1 class="mt-2 text-2xl font-black sm:text-3xl">Brasaland TypeScript Functions Tester</h1>
+        <p class="mt-2 max-w-3xl text-sm text-slate-300">
+          Run filtering, sorting, search, aggregation, and validation operations from the Brasaland context.
+        </p>
+      </div>
+    </header>
+
+    <main class="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[340px_1fr] lg:px-8">
+      <section aria-label="Operation buttons" class="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+        <h2 class="text-lg font-bold">Operations</h2>
+        <div class="mt-4 grid gap-3">
+          <button id="btnFilterSales" class="rounded-xl bg-cyan-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-cyan-400">Filter Sales</button>
+          <button id="btnFilterSuppliers" class="rounded-xl bg-cyan-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-cyan-400">Filter Suppliers</button>
+          <button id="btnFilterEmployees" class="rounded-xl bg-cyan-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-cyan-400">Filter Employees</button>
+          <button id="btnSortSales" class="rounded-xl bg-emerald-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-emerald-400">Sort Sales</button>
+          <button id="btnLinearSearch" class="rounded-xl bg-amber-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-amber-400">Linear Search</button>
+          <button id="btnBinarySearch" class="rounded-xl bg-amber-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-amber-400">Binary Search</button>
+          <button id="btnAggregate" class="rounded-xl bg-fuchsia-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-fuchsia-400">Aggregations</button>
+          <button id="btnValidate" class="rounded-xl bg-rose-500 px-4 py-2 text-left text-sm font-bold text-slate-950 hover:bg-rose-400">Validations</button>
+        </div>
+      </section>
+
+      <section aria-label="Operation output" class="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+        <h2 class="text-lg font-bold">Result</h2>
+        <pre id="result" class="mt-4 min-h-[420px] overflow-auto rounded-xl bg-slate-950 p-4 text-xs text-slate-100"></pre>
+      </section>
+    </main>
+
+    <script type="module" src="./dist/manualTest.js"></script>
+  </body>
+</html>

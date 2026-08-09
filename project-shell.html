@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brasaland Milestones Shell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-100 text-slate-900">
+    <header class="border-b border-slate-300 bg-white shadow-sm" role="banner">
+      <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-wider text-orange-700">Global Project Shell</p>
+          <h1 class="text-2xl font-black">Brasaland Digital Milestones</h1>
+        </div>
+        <nav aria-label="Milestone navigation" class="flex flex-wrap gap-2">
+          <button data-view="m1" class="view-button rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">Milestone 1</button>
+          <button data-view="m2" class="view-button rounded-full bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800">Milestone 2</button>
+          <button data-view="m3" class="view-button rounded-full bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800">Milestone 3</button>
+          <button data-view="full" class="view-button rounded-full bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800">Full Project</button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="mainContent" class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <section id="view-m1" class="view-panel" aria-label="Milestone 1 view">
+        <h2 class="mb-3 text-xl font-bold">Milestone 1: Landing + Application Form</h2>
+        <div class="grid gap-4 lg:grid-cols-2">
+          <iframe title="Milestone 1 Landing Page" src="./index.html" class="h-[520px] w-full rounded-xl border border-slate-300 bg-white"></iframe>
+          <iframe title="Milestone 1 Application Page" src="./application.html" class="h-[520px] w-full rounded-xl border border-slate-300 bg-white"></iframe>
+        </div>
+      </section>
+
+      <section id="view-m2" class="view-panel hidden" aria-label="Milestone 2 view">
+        <h2 class="mb-3 text-xl font-bold">Milestone 2: TypeScript Backend Logic</h2>
+        <iframe title="Milestone 2 TypeScript Test Interface" src="./components/milestone2/index.html" class="h-[720px] w-full rounded-xl border border-slate-300 bg-white"></iframe>
+      </section>
+
+      <section id="view-m3" class="view-panel hidden" aria-label="Milestone 3 view">
+        <h2 class="mb-3 text-xl font-bold">Milestone 3: Pending</h2>
+        <article class="rounded-xl border border-amber-300 bg-amber-50 p-4 text-amber-900">
+          Milestone 3 has not been implemented yet. This placeholder keeps navigation and shell architecture ready for the next phase.
+        </article>
+      </section>
+
+      <section id="view-full" class="view-panel hidden" aria-label="Full project aggregated view">
+        <h2 class="mb-3 text-xl font-bold">Full Project (Aggregated View)</h2>
+        <div class="space-y-4">
+          <article>
+            <h3 class="mb-2 font-semibold">Milestone 1</h3>
+            <iframe title="Aggregated Milestone 1 Landing" src="./index.html" class="h-[420px] w-full rounded-xl border border-slate-300 bg-white"></iframe>
+          </article>
+          <article>
+            <h3 class="mb-2 font-semibold">Milestone 2</h3>
+            <iframe title="Aggregated Milestone 2 Interface" src="./components/milestone2/index.html" class="h-[540px] w-full rounded-xl border border-slate-300 bg-white"></iframe>
+          </article>
+          <article>
+            <h3 class="mb-2 font-semibold">Milestone 3</h3>
+            <div class="rounded-xl border border-slate-300 bg-white p-4 text-sm text-slate-600">Not implemented yet.</div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const buttons = document.querySelectorAll('.view-button');
+      const panels = document.querySelectorAll('.view-panel');
+
+      function activateView(viewName) {
+        panels.forEach((panel) => {
+          if (panel.id === `view-${viewName}`) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+
+        buttons.forEach((button) => {
+          if (button.dataset.view === viewName) {
+            button.classList.remove('bg-slate-200', 'text-slate-800');
+            button.classList.add('bg-slate-900', 'text-white');
+          } else {
+            button.classList.remove('bg-slate-900', 'text-white');
+            button.classList.add('bg-slate-200', 'text-slate-800');
+          }
+        });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          activateView(button.dataset.view);
+        });
+      });
+    </script>
+  </body>
+</html>
