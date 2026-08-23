@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milestone 3 | Talent Pipeline Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    <main class="mx-auto max-w-6xl space-y-4 p-4 sm:p-6">
+      <header class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Brasaland People and Culture</p>
+        <h1 class="text-2xl font-black">Milestone 3 (Static Shell Mode)</h1>
+        <p class="text-sm text-slate-600">Single-server mode for project-shell navigation. All API calls remain async.</p>
+      </header>
+
+      <section class="grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-4">
+        <label class="text-sm font-semibold text-slate-700">
+          Search
+          <input id="searchInput" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="name or email" />
+        </label>
+        <label class="text-sm font-semibold text-slate-700">
+          Status
+          <select id="statusFilter" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+            <option value="">All</option>
+            <option value="received">Received</option>
+            <option value="in_progress">In Progress</option>
+            <option value="selected">Selected</option>
+            <option value="discarded">Discarded</option>
+          </select>
+        </label>
+        <label class="text-sm font-semibold text-slate-700">
+          Stage
+          <select id="stageFilter" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="review">Review</option>
+            <option value="personal_interview">Personal Interview</option>
+            <option value="technical_interview">Technical Interview</option>
+            <option value="offer_presented">Offer Presented</option>
+          </select>
+        </label>
+        <div class="flex items-end gap-2">
+          <button id="clearFilters" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700">Clear</button>
+        </div>
+      </section>
+
+      <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-lg font-black">Candidates</h2>
+          <button id="toggleCreate" class="rounded-lg bg-slate-900 px-3 py-2 text-sm font-bold text-white">Register Candidate</button>
+        </div>
+        <p id="listState" class="mb-2 text-sm text-slate-600">Loading candidates...</p>
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-left text-sm">
+            <thead class="bg-slate-100 text-slate-700">
+              <tr>
+                <th class="px-3 py-2">Name</th>
+                <th class="px-3 py-2">Position</th>
+                <th class="px-3 py-2">Status</th>
+                <th class="px-3 py-2">Stage</th>
+                <th class="px-3 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody id="candidateRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="createSection" class="hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <h2 class="mb-3 text-lg font-black">Register New Candidate</h2>
+        <form id="createForm" class="grid gap-3 md:grid-cols-2">
+          <input name="full_name" required class="rounded-lg border border-slate-300 px-3 py-2" placeholder="Full name *" />
+          <input name="email" type="email" required class="rounded-lg border border-slate-300 px-3 py-2" placeholder="Email *" />
+          <input name="phone" required class="rounded-lg border border-slate-300 px-3 py-2" placeholder="Phone *" />
+          <input name="position" required class="rounded-lg border border-slate-300 px-3 py-2" placeholder="Position *" />
+          <input name="linkedin_url" class="rounded-lg border border-slate-300 px-3 py-2" placeholder="LinkedIn URL" />
+          <input name="cv_url" class="rounded-lg border border-slate-300 px-3 py-2" placeholder="CV URL" />
+          <input name="experience_years" type="number" step="0.5" min="0" required class="rounded-lg border border-slate-300 px-3 py-2 md:col-span-2" placeholder="Experience years *" />
+          <div class="md:col-span-2 flex items-center gap-2">
+            <button class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-bold text-white">Create</button>
+            <p id="createState" class="text-sm text-slate-600"></p>
+          </div>
+        </form>
+      </section>
+
+      <section id="detailSection" class="hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <h2 id="detailName" class="text-lg font-black">Candidate Detail</h2>
+          <button id="closeDetail" class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold">Close</button>
+        </div>
+        <p id="detailState" class="mb-3 text-sm text-slate-600"></p>
+        <div id="detailFields" class="grid gap-2 text-sm md:grid-cols-2"></div>
+
+        <div class="mt-4 grid gap-3 md:grid-cols-2">
+          <label class="text-sm font-semibold text-slate-700">Status
+            <select id="statusSelect" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+              <option value="received">Received</option>
+              <option value="in_progress">In Progress</option>
+              <option value="selected">Selected</option>
+              <option value="discarded">Discarded</option>
+            </select>
+          </label>
+          <label class="text-sm font-semibold text-slate-700">Stage
+            <select id="stageSelect" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+              <option value="pending">Pending</option>
+              <option value="review">Review</option>
+              <option value="personal_interview">Personal Interview</option>
+              <option value="technical_interview">Technical Interview</option>
+              <option value="offer_presented">Offer Presented</option>
+            </select>
+          </label>
+        </div>
+
+        <section class="mt-5 rounded-xl border border-slate-200 p-3">
+          <h3 class="text-sm font-black">Edit Candidate</h3>
+          <form id="editForm" class="mt-3 grid gap-3 md:grid-cols-2"></form>
+          <p id="editState" class="mt-2 text-sm text-slate-600"></p>
+        </section>
+
+        <section class="mt-5 rounded-xl border border-slate-200 p-3">
+          <h3 class="text-sm font-black">Notes</h3>
+          <form id="noteForm" class="mt-2 flex gap-2">
+            <input id="noteInput" required class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" placeholder="Add internal note" />
+            <button class="rounded-lg bg-slate-900 px-3 py-2 text-sm font-bold text-white">Add</button>
+          </form>
+          <p id="noteState" class="mt-2 text-sm text-slate-600"></p>
+          <ul id="noteList" class="mt-3 space-y-2"></ul>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const API_URL = "https://playground.4geeks.com/tracker/api/v1";
+      const state = { selectedId: null, selectedCandidate: null };
+
+      const rows = document.getElementById("candidateRows");
+      const listState = document.getElementById("listState");
+      const detailSection = document.getElementById("detailSection");
+      const detailName = document.getElementById("detailName");
+      const detailState = document.getElementById("detailState");
+      const detailFields = document.getElementById("detailFields");
+      const noteList = document.getElementById("noteList");
+      const noteState = document.getElementById("noteState");
+      const createSection = document.getElementById("createSection");
+
+      const searchInput = document.getElementById("searchInput");
+      const statusFilter = document.getElementById("statusFilter");
+      const stageFilter = document.getElementById("stageFilter");
+
+      const formatEnum = (v) => (v || "").split("_").map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(" ");
+      const fmtDate = (v) => new Date(v).toLocaleDateString();
+
+      function setListQueryToUrl() {
+        const url = new URL(window.location.href);
+        ["search", "status", "stage"].forEach((k) => url.searchParams.delete(k));
+        if (searchInput.value.trim()) url.searchParams.set("search", searchInput.value.trim());
+        if (statusFilter.value) url.searchParams.set("status", statusFilter.value);
+        if (stageFilter.value) url.searchParams.set("stage", stageFilter.value);
+        window.history.replaceState(null, "", url.toString());
+      }
+
+      function loadFiltersFromUrl() {
+        const p = new URLSearchParams(window.location.search);
+        searchInput.value = p.get("search") || "";
+        statusFilter.value = p.get("status") || "";
+        stageFilter.value = p.get("stage") || "";
+      }
+
+      async function api(path, init) {
+        const res = await fetch(API_URL + path, {
+          ...init,
+          headers: { "Content-Type": "application/json", ...(init && init.headers ? init.headers : {}) }
+        });
+        if (!res.ok) {
+          let msg = res.statusText;
+          try {
+            const json = await res.json();
+            msg = json && json.detail && json.detail[0] && json.detail[0].msg ? json.detail[0].msg : msg;
+          } catch {}
+          throw new Error(msg || "Request failed");
+        }
+        if (res.status === 204) return null;
+        return res.json();
+      }
+
+      async function loadCandidates() {
+        listState.textContent = "Loading candidates...";
+        rows.innerHTML = "";
+        setListQueryToUrl();
+
+        const q = new URLSearchParams();
+        q.set("limit", "100");
+        if (searchInput.value.trim()) q.set("search", searchInput.value.trim());
+        if (statusFilter.value) q.set("status", statusFilter.value);
+        if (stageFilter.value) q.set("stage", stageFilter.value);
+
+        try {
+          const data = await api("/records?" + q.toString());
+          listState.textContent = "Showing " + data.data.length + " of " + data.total + " candidates.";
+          rows.innerHTML = data.data.map((c) => `
+            <tr class="border-t border-slate-200">
+              <td class="px-3 py-2"><p class="font-semibold">${c.full_name}</p><p class="text-xs text-slate-500">${c.email}</p></td>
+              <td class="px-3 py-2">${c.position}</td>
+              <td class="px-3 py-2">${formatEnum(c.status)}</td>
+              <td class="px-3 py-2">${formatEnum(c.stage)}</td>
+              <td class="px-3 py-2"><button data-id="${c.id}" class="open-detail rounded-lg bg-amber-500 px-3 py-2 text-xs font-bold text-white">Open</button></td>
+            </tr>
+          `).join("");
+
+          document.querySelectorAll(".open-detail").forEach((btn) => {
+            btn.addEventListener("click", () => openDetail(btn.dataset.id));
+          });
+        } catch (e) {
+          listState.textContent = "Error loading candidates: " + e.message;
+        }
+      }
+
+      function renderEditForm(c) {
+        const form = document.getElementById("editForm");
+        form.innerHTML = `
+          <input name="full_name" required class="rounded-lg border border-slate-300 px-3 py-2" value="${c.full_name || ""}" />
+          <input name="email" type="email" required class="rounded-lg border border-slate-300 px-3 py-2" value="${c.email || ""}" />
+          <input name="phone" required class="rounded-lg border border-slate-300 px-3 py-2" value="${c.phone || ""}" />
+          <input name="position" required class="rounded-lg border border-slate-300 px-3 py-2" value="${c.position || ""}" />
+          <input name="linkedin_url" class="rounded-lg border border-slate-300 px-3 py-2" value="${c.linkedin_url || ""}" />
+          <input name="cv_url" class="rounded-lg border border-slate-300 px-3 py-2" value="${c.cv_url || ""}" />
+          <input name="experience_years" type="number" step="0.5" min="0" required class="rounded-lg border border-slate-300 px-3 py-2 md:col-span-2" value="${c.experience_years || 0}" />
+          <div class="md:col-span-2"><button class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-bold text-white">Save Candidate</button></div>
+        `;
+
+        form.onsubmit = async (event) => {
+          event.preventDefault();
+          const f = new FormData(form);
+          const payload = {
+            full_name: String(f.get("full_name") || "").trim(),
+            email: String(f.get("email") || "").trim(),
+            phone: String(f.get("phone") || "").trim(),
+            position: String(f.get("position") || "").trim(),
+            linkedin_url: String(f.get("linkedin_url") || "").trim() || null,
+            cv_url: String(f.get("cv_url") || "").trim() || null,
+            experience_years: Number(f.get("experience_years") || 0)
+          };
+          const editState = document.getElementById("editState");
+          editState.textContent = "Saving candidate...";
+          try {
+            await api("/records/" + state.selectedId, { method: "PUT", body: JSON.stringify(payload) });
+            editState.textContent = "Candidate updated successfully.";
+            await openDetail(state.selectedId);
+            await loadCandidates();
+          } catch (e) {
+            editState.textContent = "Error: " + e.message;
+          }
+        };
+      }
+
+      async function loadNotes(id) {
+        noteState.textContent = "Loading notes...";
+        noteList.innerHTML = "";
+        try {
+          const result = await api("/records/" + id + "/notes");
+          const notes = result.data || [];
+          noteState.textContent = notes.length ? "" : "No notes yet.";
+          noteList.innerHTML = notes.map((n) => `
+            <li class="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+              <p>${n.content}</p>
+              <div class="mt-2 flex items-center justify-between text-xs text-slate-500">
+                <span>${fmtDate(n.created_at)}</span>
+                <button data-note="${n.id}" class="delete-note font-semibold text-red-700">Delete</button>
+              </div>
+            </li>
+          `).join("");
+
+          document.querySelectorAll(".delete-note").forEach((btn) => {
+            btn.addEventListener("click", async () => {
+              noteState.textContent = "Deleting note...";
+              try {
+                await api("/records/" + id + "/notes/" + btn.dataset.note, { method: "DELETE" });
+                await loadNotes(id);
+                await loadCandidates();
+              } catch (e) {
+                noteState.textContent = "Error: " + e.message;
+              }
+            });
+          });
+        } catch (e) {
+          noteState.textContent = "Error loading notes: " + e.message;
+        }
+      }
+
+      async function openDetail(id) {
+        detailSection.classList.remove("hidden");
+        detailState.textContent = "Loading candidate detail...";
+        detailFields.innerHTML = "";
+        state.selectedId = id;
+
+        try {
+          const c = await api("/records/" + id);
+          state.selectedCandidate = c;
+          detailName.textContent = c.full_name;
+          detailState.textContent = "Candidate loaded.";
+          detailFields.innerHTML = `
+            <div><span class="font-semibold">Email:</span> ${c.email}</div>
+            <div><span class="font-semibold">Phone:</span> ${c.phone}</div>
+            <div><span class="font-semibold">Position:</span> ${c.position}</div>
+            <div><span class="font-semibold">Experience:</span> ${c.experience_years} years</div>
+            <div><span class="font-semibold">LinkedIn:</span> ${c.linkedin_url ? `<a class='text-amber-700 underline' target='_blank' href='${c.linkedin_url}'>Profile</a>` : "Not provided"}</div>
+            <div><span class="font-semibold">CV:</span> ${c.cv_url ? `<a class='text-amber-700 underline' target='_blank' href='${c.cv_url}'>Open CV</a>` : "Not provided"}</div>
+            <div><span class="font-semibold">Applied:</span> ${fmtDate(c.applied_at)}</div>
+            <div><span class="font-semibold">Updated:</span> ${fmtDate(c.updated_at)}</div>
+          `;
+
+          document.getElementById("statusSelect").value = c.status;
+          document.getElementById("stageSelect").value = c.stage;
+
+          renderEditForm(c);
+          await loadNotes(id);
+        } catch (e) {
+          detailState.textContent = "Error loading detail: " + e.message;
+        }
+      }
+
+      async function patchSelected(payload) {
+        if (!state.selectedId) return;
+        detailState.textContent = "Updating candidate...";
+        try {
+          await api("/records/" + state.selectedId, { method: "PATCH", body: JSON.stringify(payload) });
+          detailState.textContent = "Candidate updated.";
+          await openDetail(state.selectedId);
+          await loadCandidates();
+        } catch (e) {
+          detailState.textContent = "Update error: " + e.message;
+        }
+      }
+
+      document.getElementById("statusSelect").addEventListener("change", (e) => patchSelected({ status: e.target.value }));
+      document.getElementById("stageSelect").addEventListener("change", (e) => patchSelected({ stage: e.target.value }));
+      document.getElementById("closeDetail").addEventListener("click", () => detailSection.classList.add("hidden"));
+
+      document.getElementById("toggleCreate").addEventListener("click", () => {
+        createSection.classList.toggle("hidden");
+      });
+
+      document.getElementById("createForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const f = new FormData(form);
+        const payload = {
+          full_name: String(f.get("full_name") || "").trim(),
+          email: String(f.get("email") || "").trim(),
+          phone: String(f.get("phone") || "").trim(),
+          position: String(f.get("position") || "").trim(),
+          linkedin_url: String(f.get("linkedin_url") || "").trim() || null,
+          cv_url: String(f.get("cv_url") || "").trim() || null,
+          experience_years: Number(f.get("experience_years") || 0)
+        };
+        const createState = document.getElementById("createState");
+        createState.textContent = "Creating candidate...";
+        try {
+          const created = await api("/records", { method: "POST", body: JSON.stringify(payload) });
+          createState.textContent = "Candidate created successfully.";
+          form.reset();
+          await loadCandidates();
+          await openDetail(created.id);
+        } catch (e) {
+          createState.textContent = "Error: " + e.message;
+        }
+      });
+
+      document.getElementById("noteForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!state.selectedId) return;
+        const input = document.getElementById("noteInput");
+        if (!input.value.trim()) return;
+
+        noteState.textContent = "Saving note...";
+        try {
+          await api("/records/" + state.selectedId + "/notes", {
+            method: "POST",
+            body: JSON.stringify({ content: input.value.trim() })
+          });
+          input.value = "";
+          await loadNotes(state.selectedId);
+          await loadCandidates();
+        } catch (e) {
+          noteState.textContent = "Error: " + e.message;
+        }
+      });
+
+      let timer;
+      function debouncedLoad() {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(loadCandidates, 300);
+      }
+
+      searchInput.addEventListener("input", debouncedLoad);
+      statusFilter.addEventListener("change", loadCandidates);
+      stageFilter.addEventListener("change", loadCandidates);
+      document.getElementById("clearFilters").addEventListener("click", () => {
+        searchInput.value = "";
+        statusFilter.value = "";
+        stageFilter.value = "";
+        loadCandidates();
+      });
+
+      loadFiltersFromUrl();
+      loadCandidates();
+    </script>
+  </body>
+</html>
