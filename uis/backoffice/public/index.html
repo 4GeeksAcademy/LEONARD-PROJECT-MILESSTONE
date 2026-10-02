@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#243b32" />
+    <title>Incident Analysis | Brasaland Digital</title>
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <aside class="sidebar">
+      <a class="brand" href="/backoffice/" aria-label="Brasaland Digital home">
+        <span class="brand-mark"><i data-lucide="flame" aria-hidden="true"></i></span>
+        <span><strong>brasaland<span class="brand-dot">.</span></strong><small>DIGITAL / BACKOFFICE</small></span>
+      </a>
+      <p class="nav-heading">WORKSPACE</p>
+      <nav aria-label="Application menu">
+        <a href="/backoffice/" class="nav-link active" aria-current="page"><i data-lucide="chart-no-axes-combined" aria-hidden="true"></i>Incident analysis<span class="nav-indicator"></span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="restaurant-image" role="img" aria-label="Grilled food on a restaurant table"></div>
+        <p class="network-label">ONE CHAIN. TWO MARKETS.</p>
+        <p class="network-detail">Colombia <span>/</span> Florida</p>
+        <div class="sidebar-foot"><i data-lucide="map-pin" aria-hidden="true"></i><span>14 locations</span></div>
+      </div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <p><span>Operations</span><i data-lucide="chevron-right" aria-hidden="true"></i>Incident analysis</p>
+        <span class="team-label"><span class="presence-dot"></span>Brasaland Digital</span>
+      </header>
+      <main id="main-content">
+        <div class="page-heading">
+          <div><p class="eyebrow">OPERATIONS / REPORTS</p><h1>Incident analysis</h1></div>
+          <button id="download" class="button secondary" disabled aria-label="Export CSV" title="Download results CSV"><i data-lucide="download" aria-hidden="true"></i><span>Export CSV</span></button>
+        </div>
+
+        <form id="upload-form" class="upload-section">
+          <div class="section-title"><h2>Source file</h2><span class="tag">CSV / UTF-8</span></div>
+          <div id="drop-zone" class="drop-zone">
+            <span class="upload-symbol"><i data-lucide="file-spreadsheet" aria-hidden="true"></i></span>
+            <div class="file-copy"><strong id="file-name">Incident CSV</strong><span id="file-detail">No file selected</span></div>
+            <label class="button secondary file-label" for="file-input"><i data-lucide="folder-open" aria-hidden="true"></i><span>Choose file</span></label>
+            <input id="file-input" class="file-input" type="file" accept=".csv,text/csv" aria-label="Choose incident CSV" />
+          </div>
+          <div class="upload-actions"><span class="privacy-label"><i data-lucide="shield-check" aria-hidden="true"></i>Internal processing</span><button id="analyze" type="submit" class="button primary" disabled><i data-lucide="arrow-right" aria-hidden="true"></i><span>Analyze file</span></button></div>
+        </form>
+
+        <p id="error" class="error-message" role="alert" hidden></p>
+        <p id="progress" class="progress-message" role="status" aria-live="polite" hidden></p>
+        <section id="empty-state" class="empty-state"><i data-lucide="chart-column" aria-hidden="true"></i><h2>No analysis yet</h2><span>Results</span></section>
+
+        <div id="results" hidden>
+          <div class="results-heading"><h2>Analysis summary</h2><span id="analysis-time"></span></div>
+          <section class="metric-strip" aria-label="Record totals">
+            <div class="metric"><span>Total records</span><strong id="total-records">0</strong><small>Source records</small></div>
+            <div class="metric"><span>Valid records</span><strong id="valid-records">0</strong><small id="valid-percentage"></small></div>
+            <div class="metric invalid-metric"><span>Invalid records</span><strong id="invalid-records">0</strong><small>Excluded from metrics</small></div>
+            <div class="metric"><span>Closed cases</span><strong id="closed-records">0</strong><small id="scored-cases"></small></div>
+          </section>
+          <section id="validation" class="validation-section" aria-labelledby="validation-title">
+            <div class="validation-heading"><span class="validation-symbol"><i id="warning-icon" data-lucide="triangle-alert" aria-hidden="true"></i><i id="clean-icon" data-lucide="circle-check" aria-hidden="true" hidden></i></span><div><h2 id="validation-title">Record validation</h2><p id="validation-message"></p></div></div>
+            <table id="invalid-table" class="invalid-table"><thead><tr><th scope="col">Validation issue</th><th scope="col">Records</th></tr></thead><tbody id="invalid-rows"></tbody></table>
+            <p id="overlap-note" class="small-note">A record can trigger more than one validation issue.</p>
+          </section>
+          <div class="breakdowns">
+            <section class="category-section" aria-labelledby="category-title">
+              <div class="section-title"><h2 id="category-title">Incident categories</h2><span class="section-meta">VALID RECORDS</span></div>
+              <table class="data-table"><thead><tr><th scope="col">Category</th><th scope="col">Records</th><th scope="col">Share</th></tr></thead><tbody id="category-rows"></tbody></table>
+            </section>
+            <section class="status-section" aria-labelledby="status-title">
+              <div class="section-title"><h2 id="status-title">Case status</h2><span class="section-meta">VALID RECORDS</span></div>
+              <div id="status-bar" class="status-bar" aria-hidden="true"></div>
+              <table class="data-table"><thead><tr><th scope="col">Status</th><th scope="col">Records</th><th scope="col">Share</th></tr></thead><tbody id="status-rows"></tbody></table>
+            </section>
+          </div>
+          <section class="satisfaction-section" aria-labelledby="satisfaction-title">
+            <div class="section-title"><h2 id="satisfaction-title">Satisfaction index</h2><span class="section-meta">SCORED CLOSED CASES</span></div>
+            <div class="satisfaction-layout"><div class="satisfaction-average"><span class="small-note">Average score</span><p><strong id="average-score"></strong><span>/ 5.00</span></p><span id="satisfaction-count"></span></div><div id="score-chart" class="score-chart" aria-label="Satisfaction score distribution"></div></div>
+          </section>
+        </div>
+        <footer class="main-footer"><span>BRASALAND DIGITAL</span><span>Operations / Incident reports</span></footer>
+      </main>
+    </div>
+  </body>
+</html>

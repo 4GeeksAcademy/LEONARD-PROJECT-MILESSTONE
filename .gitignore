@@ -1,2 +1,15 @@
 # Milestone 2 local dependencies
 components/milestone2/node_modules/
+
+# Incident analyzer local dependencies and generated outputs
+.venv/
+__pycache__/
+*.pyc
+results.csv
+scripts/incidents*.csv
+!scripts/incidents-brasaland-demo.csv
+uis/backoffice/node_modules/
+uis/backoffice/public/app.js
+uis/backoffice/public/app.css
+uis/backoffice/public/fonts/
+uis/backoffice/test-results/

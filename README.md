@@ -7,6 +7,15 @@ _Base template for transversal projects in the AI Engineering Career Program —
 
 _Estas instrucciones tambien estan disponibles en [espanol](./README.es.md)._
 
+## Brasaland Incident Analyzer
+
+The incident analyzer is implemented in [scripts](./scripts/README.md), the
+[shared analyzer](./packages/incident_analysis/README.md), the
+[FastAPI service](./services/api/README.md), and the
+[operations backoffice](./uis/backoffice/README.md).
+See [verification and demo screenshots](./docs/incident-analysis/README.md)
+for test results and the original-sample verification still required.
+
 ---
 
 ## Purpose

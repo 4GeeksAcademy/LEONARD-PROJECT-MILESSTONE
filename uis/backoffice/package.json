@@ -1,0 +1,19 @@
+{
+  "name": "brasaland-incident-backoffice",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild src/app.js --bundle --minify --outfile=public/app.js --loader:.woff2=file --loader:.woff=file --asset-names=fonts/[name]-[hash]",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
+    "lucide": "^0.577.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "esbuild": "^0.28.2"
+  }
+}
