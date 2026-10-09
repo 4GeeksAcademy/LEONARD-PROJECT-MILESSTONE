@@ -13,3 +13,8 @@ uis/backoffice/public/app.js
 uis/backoffice/public/app.css
 uis/backoffice/public/fonts/
 uis/backoffice/test-results/
+uis/backoffice/public/suppliers.js
+uis/backoffice/public/suppliers.css
+data/suppliers.json
+services/api/*.egg-info/
+build/

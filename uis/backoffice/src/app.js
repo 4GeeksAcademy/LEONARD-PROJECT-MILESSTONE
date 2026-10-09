@@ -4,11 +4,11 @@ import '@fontsource/dm-sans/latin-600.css';
 import '@fontsource/space-grotesk/latin-600.css';
 import {
   createIcons, Flame, ChartNoAxesCombined, MapPin, ChevronRight, Download,
-  FileSpreadsheet, FolderOpen, ShieldCheck, ArrowRight, ChartColumn, TriangleAlert, CircleCheck,
+  FileSpreadsheet, FolderOpen, ShieldCheck, ArrowRight, ChartColumn, TriangleAlert, CircleCheck, Truck,
 } from 'lucide';
 
 createIcons({ icons: { Flame, ChartNoAxesCombined, MapPin, ChevronRight, Download,
-  FileSpreadsheet, FolderOpen, ShieldCheck, ArrowRight, ChartColumn, TriangleAlert, CircleCheck } });
+  FileSpreadsheet, FolderOpen, ShieldCheck, ArrowRight, ChartColumn, TriangleAlert, CircleCheck, Truck } });
 
 const element = (identifier) => document.getElementById(identifier);
 const input = element('file-input');

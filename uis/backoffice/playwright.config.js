@@ -14,5 +14,6 @@ export default defineConfig({
     url: 'http://127.0.0.1:8012/health',
     reuseExistingServer: false,
     timeout: 30000,
+    env: { SUPPLIERS_DB_PATH: path.join(root, `uis/backoffice/test-results/suppliers-${process.pid}.json`) },
   },
 });

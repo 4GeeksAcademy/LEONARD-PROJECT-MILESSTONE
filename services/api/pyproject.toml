@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brasaland-api"
+version = "1.1.0"
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[project.scripts]
+seed = "services.api.seed:main"
+
+[tool.setuptools]
+packages = ["services.api", "services.api.app", "services.api.routers"]
+package-dir = {"services.api" = "."}
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
