@@ -4,6 +4,7 @@ import sys
 import threading
 import time
 from collections import OrderedDict
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, File, HTTPException, Request, Response, UploadFile
@@ -15,6 +16,9 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "packages"))
 
 from incident_analysis import AnalysisError, RULES, analyze_csv, results_csv
+from services.api.database import open_database
+from services.api.routers.suppliers import router as suppliers_router
+from services.api.seed import seed_database
 
 
 MAX_UPLOAD_BYTES = 256 * 1024 * 1024
@@ -51,8 +55,17 @@ class UploadLimitMiddleware:
         await self.app(scope, limited_receive, send)
 
 
-app = FastAPI(title="Brasaland Incident Analysis API", version="1.0.0")
+@asynccontextmanager
+async def lifespan(app):
+    with open_database() as database:
+        seed_database(database)
+        app.state.suppliers_db = database
+        yield
+
+
+app = FastAPI(title="Brasaland Digital API", version="1.1.0", lifespan=lifespan)
 app.add_middleware(UploadLimitMiddleware)
+app.include_router(suppliers_router)
 
 
 def expire_cache() -> None:
